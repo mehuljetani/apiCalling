@@ -1,15 +1,19 @@
 import {FlatList, SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
+import {useDispatch} from 'react-redux';
+import {getUser} from '../redux/action/index';
 
 const UserScreen = () => {
-  const [data, setData] = useState('');
+  const [data, setData] = useState([]);
+  const dispatch = useDispatch();
 
   const getData = () => {
     axios
       .get(`https://jsonplaceholder.typicode.com/users`)
       .then(res => {
         setData(res?.data);
+        dispatch(getUser(data));
       })
       .catch(e => {
         console.log(e);
@@ -90,10 +94,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 12,
     marginTop: 18,
-    shadowColor: 'yellow',
-    shadowOffset: {width: 0, height: 1},
+    shadowColor: 'black',
+    shadowOffset: {width: 1, height: 1},
     shadowOpacity: 1,
     shadowRadius: 3,
-    elevation: 10,
+    elevation: 18,
   },
 });
