@@ -1,13 +1,13 @@
-import {GET_USER} from '../action/index';
+import {GET_USER} from '../action/type';
 
 const INITIAL_STATE = {
   arr: [],
 };
 
-const getUserReducer = (state = INITIAL_STATE, action) => {
+export const getUserReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case GET_USER: {
-      console.log('reducer state', action.payload);
+      // console.log('user Data ::: ', action.payload);
       return {...state, arr: action.payload};
     }
     default: {
@@ -15,5 +15,3 @@ const getUserReducer = (state = INITIAL_STATE, action) => {
     }
   }
 };
-
-export default getUserReducer;

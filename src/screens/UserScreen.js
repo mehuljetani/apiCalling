@@ -1,23 +1,35 @@
-import {FlatList, SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import {
+  Button,
+  FlatList,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import axios from 'axios';
-import {useDispatch} from 'react-redux';
-import {getUser} from '../redux/action/index';
+import {useDispatch, useSelector} from 'react-redux';
+import {fetchData} from '../helper/globalFunction';
 
 const UserScreen = () => {
-  const [data, setData] = useState([]);
   const dispatch = useDispatch();
+  const data = useSelector(state => {
+    return state.getUser.arr;
+  });
 
   const getData = () => {
-    axios
-      .get(`https://jsonplaceholder.typicode.com/users`)
-      .then(res => {
-        setData(res?.data);
-        dispatch(getUser(data));
-      })
-      .catch(e => {
-        console.log(e);
-      });
+    let request = {
+      data: {
+        url: `https://jsonplaceholder.typicode.com/users`,
+      },
+      onSuccess: res => {
+        console.log('response on screen', res);
+      },
+      onFail: err => {
+        console.log('error on screen', err);
+      },
+    };
+    dispatch(fetchData(request));
   };
 
   useEffect(() => {

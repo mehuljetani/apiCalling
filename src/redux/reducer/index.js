@@ -1,8 +1,8 @@
 import {combineReducers} from 'redux';
-import getUserReducer from '../reducer/getUserReducer';
+import {getUserReducer} from './getUserReducer';
 
 const reducers = combineReducers({
-  getUserRedux: getUserReducer,
+  getUser: getUserReducer,
 });
 
 export default reducers;

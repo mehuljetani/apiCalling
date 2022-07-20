@@ -1,7 +1,7 @@
 import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
-import StackNav from './src/navigation/StackNav';
 import {Provider} from 'react-redux';
+import StackNav from './src/navigation/StackNav';
 import store from './src/redux/store/store';
 
 const App = () => {
