@@ -59,10 +59,35 @@ import {getUser} from '../redux/action';
 //   }
 // };
 
+// export const fetchData = request => async dispatch => {
+//   console.log('request object - ', request);
+//   await axios
+//     .get(request?.data?.url)
+//     .then(res => {
+//       console.log('response --- ', res?.data);
+//       dispatch(getUser(res?.data));
+//       if (request?.onSuccess) {
+//         request?.onSuccess(res?.data);
+//       }
+//     })
+//     .catch(err => {
+//       console.log(err);
+//       if (request?.onFail) {
+//         request?.onFail(err);
+//       }
+//     });
+// };
+
 export const fetchData = request => async dispatch => {
-  console.log('request object - ', request);
-  await axios
-    .get(request?.data?.url)
+  console.log('req...', request);
+  await axios({
+    method: 'get',
+    url: '/users',
+    baseURL: `https://jsonplaceholder.typicode.com`,
+    // params: {
+    //   id: 5,
+    // },
+  })
     .then(res => {
       console.log('response --- ', res?.data);
       dispatch(getUser(res?.data));
@@ -71,7 +96,7 @@ export const fetchData = request => async dispatch => {
       }
     })
     .catch(err => {
-      console.log(err);
+      console.log('error --- ', err);
       if (request?.onFail) {
         request?.onFail(err);
       }

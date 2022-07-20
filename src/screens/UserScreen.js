@@ -4,14 +4,14 @@ import {
   SafeAreaView,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {fetchData} from '../helper/globalFunction';
+import {deleteUser} from '../redux/action';
 
-const UserScreen = () => {
+const UserScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const data = useSelector(state => {
     return state.getUser.arr;
@@ -19,17 +19,25 @@ const UserScreen = () => {
 
   const getData = () => {
     let request = {
-      data: {
-        url: `https://jsonplaceholder.typicode.com/users`,
-      },
+      // data: {
+      //   url: `https://jsonplaceholder.typicode.com/users`,
+      // },
       onSuccess: res => {
         console.log('response on screen', res);
       },
       onFail: err => {
-        console.log('error on screen', err);
+        console.log('error on screen ', err);
       },
     };
     dispatch(fetchData(request));
+  };
+
+  const onDeletePress = id => {
+    dispatch(deleteUser(id));
+  };
+
+  const onEditPress = item => {
+    navigation.navigate('UpdateScreen', {item: item});
   };
 
   useEffect(() => {
@@ -57,6 +65,12 @@ const UserScreen = () => {
         <Text>Geo - </Text>
         <Text>Latitude: {item.address.geo.lat}</Text>
         <Text>Longitude: {item.address.geo.lng}</Text>
+        <Button
+          title="Delete"
+          color={'red'}
+          onPress={() => onDeletePress(item.id)}
+        />
+        <Button title="Edit" color={'blue'} onPress={() => onEditPress(item)} />
       </View>
     );
   };
