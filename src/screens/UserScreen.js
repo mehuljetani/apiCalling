@@ -8,10 +8,9 @@ import {
 } from 'react-native';
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {fetchData} from '../helper/globalFunction';
-import {deleteUser} from '../redux/action';
+import {getUserData} from '../helper/globalFunction';
 
-const UserScreen = ({navigation}) => {
+const UserScreen = () => {
   const dispatch = useDispatch();
   const data = useSelector(state => {
     return state.getUser.arr;
@@ -29,15 +28,7 @@ const UserScreen = ({navigation}) => {
         console.log('error on screen ', err);
       },
     };
-    dispatch(fetchData(request));
-  };
-
-  const onDeletePress = id => {
-    dispatch(deleteUser(id));
-  };
-
-  const onEditPress = item => {
-    navigation.navigate('UpdateScreen', {item: item});
+    dispatch(getUserData(request));
   };
 
   useEffect(() => {
@@ -65,12 +56,6 @@ const UserScreen = ({navigation}) => {
         <Text>Geo - </Text>
         <Text>Latitude: {item.address.geo.lat}</Text>
         <Text>Longitude: {item.address.geo.lng}</Text>
-        <Button
-          title="Delete"
-          color={'red'}
-          onPress={() => onDeletePress(item.id)}
-        />
-        <Button title="Edit" color={'blue'} onPress={() => onEditPress(item)} />
       </View>
     );
   };
